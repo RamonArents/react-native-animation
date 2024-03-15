@@ -14,6 +14,28 @@ export default function App() {
     }).start()
   }
 
+  function handleFadeOutBox(){
+    Animated.timing(boxOpacityAnimationValue, {
+      duration : 500,
+      toValue: 0,
+      useNativeDriver: true
+    }).start()
+  }
+
+  function handleCallbackMethod(){
+    Animated.timing(boxOpacityAnimationValue, {
+      duration : 500,
+      toValue: 1,
+      useNativeDriver: true
+    }).start(() => {
+      Animated.timing(boxOpacityAnimationValue, {
+        duration : 500,
+        toValue: 0.4,
+        useNativeDriver: true
+      }).start()
+    })
+  }
+
   const opacityStyle = {
     opacity: boxOpacityAnimationValue
   }
@@ -21,7 +43,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.box, opacityStyle]}></Animated.View>
-      <Button onPress={handleFadeInBox} color={"black"} title="Fade This Red Box" />
+      <Button onPress={handleFadeInBox} color={"black"} title="Fade This Red Box In" />
+      <Button onPress={handleFadeOutBox} color={'green'} title='Fade This Red Box Out' />
+      <Button onPress={handleCallbackMethod} color={'blue'} title='Handle Callback Of Timing Method' />
     </View>
   );
 }
